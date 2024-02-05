@@ -1,7 +1,52 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+
+interface formData {
+    username: string;
+    password: string;
+  }
 
 const page = () => {
+
+    const [formData, setFormData] = useState<formData>({
+        username: '',
+        password: ''
+    })
+
+    const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const validationErrors: { username?: string; password?: string } = {};
+        if (!formData.username.trim()) {
+            validationErrors.username = "username is required"
+        }
+
+
+        if (!formData.password.trim()) {
+            validationErrors.password = "password is required"
+        } else if (formData.password.length < 8) {
+            validationErrors.password = "password should be at least 8 char"
+        }
+
+
+        setErrors(validationErrors)
+
+        if (Object.keys(validationErrors).length === 0) {
+            alert("Login successfully")
+        }
+
+    }
+
     return (
         <>
             <div className='h-[100vh] flex justify-center items-center'>
@@ -11,15 +56,21 @@ const page = () => {
                 '>
                         Admin Login
                     </h1>
-                    <form className='flex flex-col justify-center items-center'>
-                        <input required type="text" name='username' placeholder='Username' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' />
-                        <input required type="password" name='password' placeholder='Password' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' />
+                    <form className='flex flex-col justify-center items-center' onSubmit={handleSubmit}>
+                        <div className='w-[96%]'>
+                        <input type="text" name='username' placeholder='Username' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
+                        {errors.username && <span className='text-red-600 text-sm'>{errors.username}</span>}
+                        </div>
+                        <div className='w-[96%]'>
+                        <input required type="password" name='password' placeholder='Password' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
+                        {errors.password && <span className='text-red-600 text-sm'>{errors.password}</span>}
+                        </div>
                         <div className='w-[96%] flex justify-start my-2'>
                             <span className='text-neutral-950 text-sm font-normal'>
                                 No account? <Link href={'/signup'} className='text-slate-600 hover:text-neutral-950'>Create one!</Link>
                             </span>
                         </div>
-                        <div className='w-[96%] flex justify-start my-2'>
+                        <div className='w-[96%] flex justify-start mb-4'>
                             <Link href={'/forgetPassword'} className='text-slate-600 hover:text-neutral-950 text-sm font-normal'>
                                 Can’t access your account?
                             </Link>
