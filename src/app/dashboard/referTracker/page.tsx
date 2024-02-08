@@ -2,7 +2,7 @@ import React from 'react'
 
 const page = () => {
     return (
-        <div>XtremeFin Development</div>
+        <div className='h-[200vh]'>Refer Tracker</div>
     )
 }
 

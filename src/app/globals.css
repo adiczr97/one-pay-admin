@@ -5,3 +5,28 @@
 :root {
     background-color: rgb(238, 234, 237);
 }
+
+.scrollbar-w-2::-webkit-scrollbar {
+    width: 0.55rem;
+    height: 0.25rem;
+}
+
+.scrollbar-track-custom::-webkit-scrollbar-track {
+    --bg-opacity: 1;
+    background-color: #2d4568;
+}
+
+.scrollbar-track-custom-main::-webkit-scrollbar-track {
+    --bg-opacity: 1;
+    background-color: #f2eded;
+}
+
+.scrollbar-thumb-custom::-webkit-scrollbar-thumb {
+    --bg-opacity: 1;
+    background-color: #ffffff4d;
+}
+
+.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+    border-radius: 0.8rem;
+    background-color: #ffffff4d;
+}
