@@ -46,7 +46,7 @@ const page = () => {
                         <input type="text" name='username' placeholder='Username or E-mail' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
                         {errors.username && <span className='text-red-600 text-sm'>{errors.username}</span>}
                         <div className='w-[96%] flex justify-end my-2'>
-                            <Link href={'/forgetPassword/resetPassword'} className='text-slate-600 hover:text-neutral-950'>
+                            <Link href={'/forgetpassword/resetpassword'} className='text-slate-600 hover:text-neutral-950'>
                                 <button className='bg-slate-50 hover:bg-teal-50 border-[1.5px] border-gray-400 py-1 px-4 rounded-[.25rem] shadow-md text-neutral-500 hover:border-teal-700 hover:text-neutral-900 active:scale-90 active:shadow-sm'>
                                     Forget Password
                                 </button>

@@ -4,10 +4,12 @@ import React from 'react'
 
 const Featured = () => {
   return (
-    <Link href="/dashboard/featured" className=''>
+    <Link href="/dashboard/featured">
       <span className='flex items-center gap-2'>
-        <FileBox />
-        Featured
+        <FileBox className='h-5 w-5' />
+        <span className='w-full truncate'>
+          Featured
+        </span>
       </span>
     </Link>)
 }

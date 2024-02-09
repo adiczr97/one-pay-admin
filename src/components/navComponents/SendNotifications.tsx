@@ -4,10 +4,12 @@ import React from 'react'
 
 const SendNotifications = () => {
   return (
-    <Link href="/dashboard/sendNotifications" className=''>
+    <Link href="/dashboard/sendnotifications">
       <span className='flex items-center gap-2'>
-        <BellDot />
-        Send Notifications
+        <BellDot className='h-5 w-5' />
+        <span className='w-full truncate'>
+          Send Notifications
+        </span>
       </span>
     </Link>)
 }

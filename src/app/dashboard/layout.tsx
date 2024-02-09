@@ -1,7 +1,6 @@
 "use client"
 import React, { ReactNode } from 'react'
 import ApplicationTracker from '@/components/navComponents/ApplicationTracker';
-import Home1 from '@/components/navComponents/Home';
 import TodaysOffer from '@/components/navComponents/TodaysOffer';
 import TopHeader from '@/components/navComponents/TopHeader';
 import Users from '@/components/navComponents/Users';
@@ -14,9 +13,10 @@ import EmployeeTracker from '@/components/navComponents/EmployeeTracker';
 import AddOperationTeam from '@/components/navComponents/AddOperationTeam';
 import ReferTracker from '@/components/navComponents/ReferTracker';
 import SendNotifications from '@/components/navComponents/SendNotifications';
-import Settings from '@/components/navComponents/Settings';
+import Setting from '@/components/navComponents/Setting';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
+import Dashboard from '@/components/navComponents/Dashboard';
 
 interface layoutProps {
     children: ReactNode;
@@ -26,64 +26,87 @@ const layout = ({ children }: layoutProps) => {
     const router = useRouter()
     const pathname = usePathname()
 
+    const data = [
+        {
+            component: <Dashboard />,
+            route: '/dashboard'
+        },
+        {
+            component: <Users />,
+            route: '/dashboard/users'
+        },
+        {
+            component: <ApplicationTracker />,
+            route: '/dashboard/applicationtracker'
+        },
+        {
+            component: <TodaysOffer />,
+            route: '/dashboard/todaysoffer'
+        },
+        {
+            component: <Deals />,
+            route: '/dashboard/deals'
+        },
+        {
+            component: <Featured />,
+            route: '/dashboard/featured'
+        },
+        {
+            component: <Wallet />,
+            route: '/dashboard/wallet'
+        },
+        {
+            component: <BbpsAndRechargeRequest />,
+            route: '/dashboard/bbpsandrechargerequest'
+        },
+        {
+            component: <PaymentRequest />,
+            route: '/dashboard/paymentrequest'
+        },
+        {
+            component: <EmployeeTracker />,
+            route: '/dashboard/employeetracker'
+        },
+        {
+            component: <AddOperationTeam />,
+            route: '/dashboard/addoperationteam'
+        },
+        {
+            component: <ReferTracker />,
+            route: '/dashboard/refertracker'
+        },
+        {
+            component: <SendNotifications />,
+            route: '/dashboard/sendnotifications'
+        },
+        {
+            component: <Setting />,
+            route: '/dashboard/settings'
+        }
+    ]
+
     return (
         <>
             <div className='h-[100vh] '>
                 <TopHeader />
-                <div className='flex h-[calc(100vh-3.5rem)]'>
-                    <div className='bg-[#2d4568] w-[22.125rem] overflow-y-auto scrollbar-w-2 scrollbar-track-custom scrollbar-thumb-custom scrollbar-thumb-rounded '>
+                <div className='flex h-[calc(100vh-3rem)]'>
+                    <div className='bg-[#2a3f54] w-[20rem] overflow-y-auto scrollbar-w-2 scrollbar-track-custom scrollbar-thumb-custom scrollbar-thumb-rounded '>
                         <div className='py-[0.875rem]'>
-                            <h1 className='font-bold text-white uppercase px-5'>admin panel</h1>
+                            <h1 className='font-semibold text-white uppercase px-5'>admin panel</h1>
                             <div className=''>
-                                {/* <h1 className='font-semibold text-lg text-white uppercase'>XtremeFin <br />finance made easy</h1> */}
                                 <ul className='  py-[.75rem]'>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-300 hover:text-[#2d4568] ${pathname === `/dashboard` ? ` bg-slate-200 text-[#2d4568] ` : ``}`}>
-                                        <Home1 />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/users` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <Users />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/applicationTracker` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <ApplicationTracker />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/todaysOffer` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <TodaysOffer />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/deals` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <Deals />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/featured` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <Featured />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/wallet` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <Wallet />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/bbpsAndRechargeRequest` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <BbpsAndRechargeRequest />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/paymentRequest` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <PaymentRequest />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/employeeTracker` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <EmployeeTracker />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/addOperationTeam` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <AddOperationTeam />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/referTracker` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <ReferTracker />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/sendNotifications` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <SendNotifications />
-                                    </li>
-                                    <li className={`text-white text-lg font-semibold py-2 px-8 hover:bg-slate-400 hover:text-[#2d4568] ${pathname === `/dashboard/settings` ? ` bg-slate-300 text-[#2d4568] ` : ``}`}>
-                                        <Settings />
-                                    </li>
+                                    {
+                                        data.map((item, index) => (
+                                            <li key={index} className={`text-white text-lg font-medium py-2 px-8 my-1 hover:bg-[#35495d] transition-all duration-100 ease-in ${pathname === `${item.route}` ? ` bg-[#35495d] border-r-4 border-r-[#1abb9c]` : ``}`}>
+                                                {item.component}
+                                            </li>
+                                        ))
+                                    }
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <aside className='bg-gray-200 w-[calc(100vw-22.125rem)] overflow-y-auto scrollbar-w-2 scrollbar-track-custom scrollbar-thumb-custom scrollbar-thumb-rounded '>{children}</aside>
+                    <aside className='w-[calc(100vw-20rem)] overflow-y-auto scrollbar-w-2 scrollbar-track-custom scrollbar-thumb-custom scrollbar-thumb-rounded '>{children}</aside>
                 </div>
             </div>
         </>

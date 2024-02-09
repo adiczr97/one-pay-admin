@@ -4,10 +4,12 @@ import React from 'react'
 
 const PaymentRequest = () => {
   return (
-    <Link href="/dashboard/paymentRequest" className=''>
+    <Link href="/dashboard/paymentrequest">
       <span className='flex items-center gap-2'>
-        <HandCoins />
-        Payment Request
+        <HandCoins className='h-5 w-5' />
+        <span className='w-full truncate'>
+          Payment Request
+        </span>
       </span>
     </Link>)
 }

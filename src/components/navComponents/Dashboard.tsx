@@ -1,18 +1,20 @@
-import { User } from 'lucide-react'
+import { Home } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-const Users = () => {
+
+const Dashboard = () => {
+
     return (
-        <Link href="/dashboard/users">
+        <Link href="/dashboard">
             <span className='flex items-center gap-2'>
-                <User className='h-5 w-5' />
+                <Home className='h-5 w-5' />
                 <span className='w-full truncate'>
-                    Users
+                    Home
                 </span>
             </span>
-        </Link >
+        </Link>
     )
 }
 
-export default Users
+export default Dashboard

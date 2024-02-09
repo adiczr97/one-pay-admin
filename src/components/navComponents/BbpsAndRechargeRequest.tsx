@@ -4,10 +4,12 @@ import React from 'react'
 
 const BbpsAndRechargeRequest = () => {
   return (
-    <Link href="/dashboard/bbpsAndRechargeRequest" className=''>
+    <Link href="/dashboard/bbpsandrechargerequest">
       <span className='flex items-center gap-2'>
-        <MessageSquareWarning />
-        Bbps And Recharge Request
+        <MessageSquareWarning className='h-5 w-5' />
+        <span className='w-full truncate'>
+          Bbps And Recharge Request
+        </span>
       </span>
     </Link>)
 }

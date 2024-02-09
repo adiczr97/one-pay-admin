@@ -4,10 +4,12 @@ import React from 'react'
 
 const wallet = () => {
   return (
-    <Link href="/dashboard/wallet" className=''>
+    <Link href="/dashboard/wallet">
       <span className='flex items-center gap-2'>
-        <Wallet />
-        wallet
+        <Wallet className='h-5 w-5' />
+        <span className='w-full truncate'>
+          wallet
+        </span>
       </span>
     </Link>
   )

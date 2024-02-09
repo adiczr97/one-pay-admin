@@ -66,7 +66,7 @@ const page = () => {
                             </span>
                         </div>
                         <div className='w-[96%] flex justify-start mb-4'>
-                            <Link href={'/forgetPassword'} className='text-slate-600 hover:text-neutral-950 text-sm font-normal'>
+                            <Link href={'/forgetpassword'} className='text-slate-600 hover:text-neutral-950 text-sm font-normal'>
                                 Can’t access your account?
                             </Link>
                         </div>

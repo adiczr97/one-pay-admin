@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    background-color: rgb(238, 234, 237);
+    background-color: #f7f7f7;
 }
 
 .scrollbar-w-2::-webkit-scrollbar {
@@ -13,7 +13,7 @@
 
 .scrollbar-track-custom::-webkit-scrollbar-track {
     --bg-opacity: 1;
-    background-color: #2d4568;
+    background-color: #2a3f54;
 }
 
 .scrollbar-track-custom-main::-webkit-scrollbar-track {
@@ -23,10 +23,10 @@
 
 .scrollbar-thumb-custom::-webkit-scrollbar-thumb {
     --bg-opacity: 1;
-    background-color: #ffffff4d;
+    background-color: #35495d;
 }
 
 .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
     border-radius: 0.8rem;
-    background-color: #ffffff4d;
+    background-color: #35495d;
 }
