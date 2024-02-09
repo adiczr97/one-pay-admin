@@ -38,16 +38,18 @@ const page = () => {
     return (
         <>
             <h1 className='font-semibold text-2xl text-center my-4 text-neutral-800'>Welcome to XtremeFin - Admin Panel</h1>
-            <div className='grid grid-cols-3 py-10 px-4  gap-4'>
+            <div className='grid grid-cols-3 py-10 px-4  gap-6'>
                 {
                     data.map((card, index) =>
                     (
                         <div key={index} className='grid grid-cols-3 items-center bg-white p-3 shadow-md rounded-[.175rem] border'>
                             <div className='col-span-2'>
                                 <p className='font-extrabold text-4xl text-[#425d88]'>{card.quantity}</p>
-                                <h1 className='mt-4 text-gray-500 font-semibold text-base'>{card.name}</h1>
+                                <h1 className='mt-4 text-gray-500 font-semibold text-lg'>{card.name}</h1>
                             </div>
-                            <img src={card.iconName} alt={card.iconName} className='col-span-1' />
+                            <div className='col-span-1 flex justify-center items-center h-full w-full'>
+                                <img src={card.iconName} alt={card.iconName} className='h-20 w-20' />
+                            </div>
                         </div>
                     ))
                 }
