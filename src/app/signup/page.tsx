@@ -1,24 +1,25 @@
 "use client"
 import Link from 'next/link'
+import { redirect } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 
 interface formData {
     username: string;
     email: string,
-    password: string,
-    confirmPassword: string
+    phonenumber: string,
+    password: string
 }
 
 const page = () => {
-
     const [formData, setFormData] = useState<formData>({
         username: '',
         email: '',
+        phonenumber: '',
         password: '',
-        confirmPassword: ''
     })
 
-    const [errors, setErrors] = useState<{ username?: string; email?: string; password?: string; confirmPassword?: string }>({});
+    const [errors, setErrors] = useState<{ username?: string; email?: string; phonenumber?: string; password?: string; }>({});
+    const [backendError, setBackendError] = useState('')
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -28,10 +29,10 @@ const page = () => {
         });
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const validationErrors: {
-            username?: string; email?: string; password?: string; confirmPassword?: string
+            username?: string; email?: string; phonenumber?: string; password?: string;
         } = {};
         if (!formData.username.trim()) {
             validationErrors.username = "username is required"
@@ -46,11 +47,41 @@ const page = () => {
         } else if (formData.password.length < 8) {
             validationErrors.password = "password should be at least 8 character"
         }
+        if (!formData.phonenumber.trim()) {
+            validationErrors.phonenumber = "phone number is required"
+        } else if (formData.phonenumber.length < 10) {
+            validationErrors.phonenumber = "phone number should be at least 10 character"
+        }
         setErrors(validationErrors)
         if (Object.keys(validationErrors).length === 0) {
-            alert("Registered successfully")
+            try {
+                const res = await fetch('api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_name: formData.username,
+                        email: formData.email,
+                        phone_number: formData.phonenumber,
+                        password: formData.password
+                    })
+                })
+                if (res.status === 400) {
+                    setBackendError('Username or phone number or email already in use')
+                }
+                if (res.status === 404) {
+                    setBackendError('Your registration has been failed')
+                }
+                if (res.status === 200) {
+                    alert("Registr successfully")
+                    // redirect('/signin')
+                    window.location.href = 'signin'
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
-
     }
 
     return (
@@ -68,11 +99,12 @@ const page = () => {
                         <input type="email" name='email' placeholder='E-mail' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
                         {errors.email && <span className='text-red-600 text-sm'>{errors.email}</span>}
 
-                        <input type="text" name='phone number' placeholder='Phone Number' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
-                        {/* {errors.phone && <span className='text-red-600 text-sm'>{errors.email}</span>} */}
+                        <input type="text" name='phonenumber' placeholder='Phone Number' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
+                        {errors.phonenumber && <span className='text-red-600 text-sm'>{errors.phonenumber}</span>}
 
                         <input type="password" name='password' placeholder='Password' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
                         {errors.password && <span className='text-red-600 text-sm'>{errors.password}</span>}
+                        {backendError && <span className='text-red-600 text-sm'>{backendError}</span>}
 
                         <div className='w-[96%] flex justify-start my-2'>
                             <span className='text-neutral-950 text-sm font-normal'>
@@ -81,11 +113,10 @@ const page = () => {
                         </div>
 
                         <div className='w-[96%] flex justify-end my-2'>
-                            <button className='bg-slate-50 hover:bg-teal-50 border-[1.5px] border-gray-400 py-1 px-4 rounded-[.25rem] shadow-md text-neutral-500 hover:border-teal-700 hover:text-neutral-900 active:scale-90 active:shadow-sm'>
+                            <button type='submit' className='bg-slate-50 hover:bg-teal-50 border-[1.5px] border-gray-400 py-1 px-4 rounded-[.25rem] shadow-md text-neutral-500 hover:border-teal-700 hover:text-neutral-900 active:scale-90 active:shadow-sm'>
                                 Register
                             </button>
                         </div>
-
                     </form>
                     <hr className='border-zinc-600 my-5 item' />
                     <div className='flex flex-col justify-center items-center'>
