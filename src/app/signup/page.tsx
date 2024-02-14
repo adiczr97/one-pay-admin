@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 
 interface formData {
@@ -20,6 +20,7 @@ const page = () => {
 
     const [errors, setErrors] = useState<{ username?: string; email?: string; phonenumber?: string; password?: string; }>({});
     const [backendError, setBackendError] = useState('')
+    const { push } = useRouter()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -55,7 +56,7 @@ const page = () => {
         setErrors(validationErrors)
         if (Object.keys(validationErrors).length === 0) {
             try {
-                const res = await fetch('api/signup', {
+                const res = await fetch('http://localhost:8000/api/v1/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -74,9 +75,8 @@ const page = () => {
                     setBackendError('Your registration has been failed')
                 }
                 if (res.status === 200) {
-                    alert("Registr successfully")
-                    // redirect('/signin')
-                    window.location.href = 'signin'
+                    alert("Register successfully Please Verify Your Email")
+                    push('/signin')
                 }
             } catch (error) {
                 console.log(error);

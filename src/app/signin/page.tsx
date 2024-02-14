@@ -1,5 +1,6 @@
 "use client"
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 
 interface formData {
@@ -15,6 +16,8 @@ const page = () => {
     })
 
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+    const [backendError, setBackendError] = useState('')
+    const { push } = useRouter()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -24,7 +27,7 @@ const page = () => {
         });
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const validationErrors: { username?: string; password?: string } = {};
         if (!formData.username.trim()) {
@@ -42,7 +45,33 @@ const page = () => {
         setErrors(validationErrors)
 
         if (Object.keys(validationErrors).length === 0) {
-            alert("Login successfully")
+            try {
+                const res = await fetch('http://localhost:8000/api/v1/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_name: formData.username,
+                        password: formData.password
+                    })
+                })
+                if (res.status === 400) {
+                    setBackendError('Please Enter Your User Name and Password')
+                }
+                if (res.status === 401) {
+                    setBackendError('Invalid user_name or password')
+                }
+                if (res.status === 420) {
+                    setBackendError('Email Is Not Verified Please Verify Email')
+                }
+                if (res.status === 200) {
+                    alert("Login successfully")
+                    push('/dashboard')
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
 
     }
@@ -60,6 +89,7 @@ const page = () => {
                         {errors.username && <span className='text-red-600 text-sm'>{errors.username}</span>}
                         <input required type="password" name='password' placeholder='Password' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
                         {errors.password && <span className='text-red-600 text-sm'>{errors.password}</span>}
+                        {backendError && <span className='text-red-600 text-sm'>{backendError}</span>}
                         <div className='w-[96%] flex justify-start my-2'>
                             <span className='text-neutral-950 text-sm font-normal'>
                                 No account? <Link href={'/signup'} className='text-slate-600 hover:text-neutral-950'>Create one!</Link>
