@@ -2,23 +2,25 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import Cookies from 'js-cookie';
 
 interface formData {
     username: string;
     password: string;
 }
 
-const page = () => {
+interface Cookies {
+    [key: string]: string;
+}
 
+const page = () => {
     const [formData, setFormData] = useState<formData>({
         username: '',
         password: ''
     })
-
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
     const [backendError, setBackendError] = useState('')
     const { push } = useRouter()
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -26,22 +28,18 @@ const page = () => {
             [name]: value
         });
     };
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const validationErrors: { username?: string; password?: string } = {};
         if (!formData.username.trim()) {
             validationErrors.username = "username is required"
         }
-
-
         if (!formData.password.trim()) {
             validationErrors.password = "password is required"
         } else if (formData.password.length < 8) {
             validationErrors.password = "password should be at least 8 char"
         }
-
-
+        
         setErrors(validationErrors)
 
         if (Object.keys(validationErrors).length === 0) {
@@ -56,6 +54,12 @@ const page = () => {
                         password: formData.password
                     })
                 })
+                const data = await res.json();
+                const { access_token, refresh_token } = data;
+
+                Cookies.set("access_token", access_token);
+                Cookies.set("refresh_token", refresh_token);
+                // console.log(`acessToken = ${access_token}`);
                 if (res.status === 400) {
                     setBackendError('Please Enter Your User Name and Password')
                 }
@@ -73,9 +77,7 @@ const page = () => {
                 console.log(error);
             }
         }
-
     }
-
     return (
         <>
             <div className='h-[100vh] flex justify-center items-center '>
@@ -113,7 +115,6 @@ const page = () => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
