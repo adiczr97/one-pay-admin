@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import toast from 'react-hot-toast';
 
 interface formData {
     username: string;
@@ -10,7 +11,7 @@ interface formData {
     password: string
 }
 
-const page = () => {
+const page = async () => {
     const [formData, setFormData] = useState<formData>({
         username: '',
         email: '',
@@ -19,7 +20,6 @@ const page = () => {
     })
 
     const [errors, setErrors] = useState<{ username?: string; email?: string; phonenumber?: string; password?: string; }>({});
-    const [backendError, setBackendError] = useState('')
     const { push } = useRouter()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -69,13 +69,13 @@ const page = () => {
                     })
                 })
                 if (res.status === 400) {
-                    setBackendError('Username or phone number or email already in use')
+                    toast.error('Username or phone number or email already in use')
                 }
                 if (res.status === 404) {
-                    setBackendError('Your registration has been failed')
+                    toast.error('Your registration has been failed')
                 }
                 if (res.status === 200) {
-                    alert("Register successfully Please Verify Your Email")
+                    toast.success("Register successfully Please Verify Your Email")
                     push('/signin')
                 }
             } catch (error) {
@@ -83,7 +83,6 @@ const page = () => {
             }
         }
     }
-
     return (
         <>
             <div className='h-[100vh] flex justify-center items-center '>
@@ -104,7 +103,6 @@ const page = () => {
 
                         <input type="password" name='password' placeholder='Password' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
                         {errors.password && <span className='text-red-600 text-sm'>{errors.password}</span>}
-                        {backendError && <span className='text-red-600 text-sm'>{backendError}</span>}
 
                         <div className='w-[96%] flex justify-start my-2'>
                             <span className='text-neutral-950 text-sm font-normal'>
@@ -125,7 +123,6 @@ const page = () => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

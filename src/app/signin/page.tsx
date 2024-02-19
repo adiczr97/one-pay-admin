@@ -1,8 +1,9 @@
 "use client"
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
 
 interface formData {
     username: string;
@@ -13,13 +14,12 @@ interface Cookies {
     [key: string]: string;
 }
 
-const page = () => {
+const page = async () => {
     const [formData, setFormData] = useState<formData>({
         username: '',
         password: ''
     })
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
-    const [backendError, setBackendError] = useState('')
     const { push } = useRouter()
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -39,7 +39,7 @@ const page = () => {
         } else if (formData.password.length < 8) {
             validationErrors.password = "password should be at least 8 char"
         }
-        
+
         setErrors(validationErrors)
 
         if (Object.keys(validationErrors).length === 0) {
@@ -58,19 +58,19 @@ const page = () => {
                 const { access_token, refresh_token } = data;
 
                 Cookies.set("access_token", access_token);
-                Cookies.set("refresh_token", refresh_token);
-                // console.log(`acessToken = ${access_token}`);
+                // Cookies.set("refresh_token", refresh_token);
+
                 if (res.status === 400) {
-                    setBackendError('Please Enter Your User Name and Password')
+                    toast.error('Please Enter Your User Name and Password')
                 }
                 if (res.status === 401) {
-                    setBackendError('Invalid user_name or password')
+                    toast.error('Invalid user_name or password')
                 }
                 if (res.status === 420) {
-                    setBackendError('Email Is Not Verified Please Verify Email')
+                    toast.error('Email Is Not Verified Please Verify Email')
                 }
                 if (res.status === 200) {
-                    alert("Login successfully")
+                    toast.success("Login successfully")
                     push('/dashboard')
                 }
             } catch (error) {
@@ -91,7 +91,6 @@ const page = () => {
                         {errors.username && <span className='text-red-600 text-sm'>{errors.username}</span>}
                         <input required type="password" name='password' placeholder='Password' autoComplete='off' className='w-[96%] rounded-sm py-1 px-3 my-2 outline outline-[1.5px] outline-gray-400 focus:outline-teal-700' onChange={handleChange} />
                         {errors.password && <span className='text-red-600 text-sm'>{errors.password}</span>}
-                        {backendError && <span className='text-red-600 text-sm'>{backendError}</span>}
                         <div className='w-[96%] flex justify-start my-2'>
                             <span className='text-neutral-950 text-sm font-normal'>
                                 No account? <Link href={'/signup'} className='text-slate-600 hover:text-neutral-950'>Create one!</Link>
