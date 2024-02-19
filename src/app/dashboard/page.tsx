@@ -32,8 +32,8 @@ const data = [
         iconName: "/images/BBPS.png"
     }
 ]
-const page = () => {
-
+const page = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 500))
     return (
         <>
             <h1 className='font-semibold text-2xl text-center my-4 text-neutral-800'>Welcome to XtremeFin - Admin Panel</h1>
