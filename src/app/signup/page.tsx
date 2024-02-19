@@ -11,7 +11,7 @@ interface formData {
     password: string
 }
 
-const page = async () => {
+const page = () => {
     const [formData, setFormData] = useState<formData>({
         username: '',
         email: '',

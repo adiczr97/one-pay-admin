@@ -33,7 +33,7 @@ const data = [
     }
 ]
 const page = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     return (
         <>
             <h1 className='font-semibold text-2xl text-center my-4 text-neutral-800'>Welcome to XtremeFin - Admin Panel</h1>

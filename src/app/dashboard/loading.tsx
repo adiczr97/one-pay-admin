@@ -15,10 +15,10 @@ const loading: FC<loadingProps> = ({ }) => {
                     <div key={index} className='grid grid-cols-3 items-center bg-white p-3 shadow-md rounded-[.175rem] border'>
                         <div className='col-span-2'>
                             <p className='font-extrabold text-4xl text-[#425d88]'><Skeleton height={30} width={30} highlightColor='#e4e4e7' /></p>
-                            <h1 className='mt-4 text-gray-500 font-semibold text-lg'><Skeleton height={30} width={200} highlightColor='#e4e4e7' /></h1>
+                            <h1 className='mt-4 text-gray-500 font-semibold text-lg'><Skeleton height={30} width={150} highlightColor='#e4e4e7' /></h1>
                         </div>
                         <div className='col-span-1 flex justify-center items-center h-full w-full'>
-                            <Skeleton circle height={100} width={100} highlightColor='#e4e4e7' />
+                            <Skeleton circle height={90} width={90} highlightColor='#e4e4e7' />
                         </div>
                     </div>
                 ))}

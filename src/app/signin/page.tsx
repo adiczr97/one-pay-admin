@@ -14,7 +14,7 @@ interface Cookies {
     [key: string]: string;
 }
 
-const page = async () => {
+const page = () => {
     const [formData, setFormData] = useState<formData>({
         username: '',
         password: ''
